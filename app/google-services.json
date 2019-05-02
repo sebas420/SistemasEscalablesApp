@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "7111128666",
+    "firebase_url": "https://sistemas-escalablesapp.firebaseio.com",
+    "project_id": "sistemas-escalablesapp",
+    "storage_bucket": "sistemas-escalablesapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7111128666:android:eac7d31135d8da6a",
+        "android_client_info": {
+          "package_name": "com.example.apolo.sistemasescalablesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7111128666-l5buooais77uo4ch5e6h0m3fqhfqdg0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apolo.sistemasescalablesapp",
+            "certificate_hash": "66bab4af0d24b293890698925c8c95467f6b1cd8"
+          }
+        },
+        {
+          "client_id": "7111128666-63bb8ai9to0tfvb2qkh8tfmq6i6jgkh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVGQ_hYDqfYi8Buy8P5ubj5saVFiRbBHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7111128666-63bb8ai9to0tfvb2qkh8tfmq6i6jgkh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
