@@ -18,7 +18,7 @@ public class VerificarEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_verificar_email);
         ActivityVerificarEmailBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_verificar_email);
-        binding.setEmailModel(new LoginViewModels(this,binding));
+        binding.setEmailModel(new LoginViewModels(this,binding,null));
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
