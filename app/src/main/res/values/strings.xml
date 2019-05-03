@@ -22,4 +22,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="invalid_credentials">Credenciales inválidos</string>
+
+
+    <!-- Strings related to Networks -->
+    <string name="networks">"Comprueba tu conexion a internet"</string>
+
+    <!-- Menu lateral -->
+    <string name="exit_to_app">"Salir"</string>
 </resources>
