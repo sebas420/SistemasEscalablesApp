@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab =  findViewById(R.id.fab);
@@ -42,14 +42,14 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         memoryData = MemoryData.getInstance(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -88,22 +88,20 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_exit_to_app) {
             memoryData.saveData("user", "");
             startActivity(new Intent(this, VerificarEmail.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent
-                            .FLAG_ACTIVITY_NEW_TASK));
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
             // Handle the camera action
-        } /*else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_user) {
+            startActivity(new Intent(this, Usuarios.class));
+        } /*else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_exit_to_app) {
 
-        }*/
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        } */
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -15,6 +15,7 @@ import ViewModels.LoginViewModels;
 public class VerificarEmail extends AppCompatActivity {
     private MemoryData memoryData;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +28,13 @@ public class VerificarEmail extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark, null));
-        }else{
+
+        } else {
             startActivity(new Intent(this, MainActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent
-                            .FLAG_ACTIVITY_NEW_TASK));
-            //overridePendingTransition(R.anim.left_in,R.anim.left_out);
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            //overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
     }
 }
-
 
 

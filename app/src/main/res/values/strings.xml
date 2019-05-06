@@ -30,4 +30,13 @@
 
     <!-- Menu lateral -->
     <string name="exit_to_app">"Salir"</string>
+    <string name="users">"Usuarios"</string>
+
+    <string name="nombre">"Nombre"</string>
+    <string name="apellido">"Apellido"</string>
+    <string name="email">"Email"</string>
+    <string name="direccion">"Direccion"</string>
+    <string name="telefono">"Telefono"</string>
+    <string name="tipopersonas">"Tipo Persona"</string>
+    <string name="regimen">"Regimen Iva"</string>
 </resources>
