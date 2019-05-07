@@ -11,9 +11,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alingParentEnd="true">
+        android:layout_height="match_parent">
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -99,6 +97,34 @@
                     android:hint="@string/apellido"
                     />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/imageViewUser12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="15dp"
+                    app:srcCompat="@drawable/ic_baseline_person_24px" />
+
+                <EditText
+                    android:id="@+id/txtcedula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/cedula"
+                    android:inputType="textPassword"
+                    app:binding="@{addUserModel.cedulaUI}"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,131 +162,20 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:id="@+id/imageViewTelefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="15dp"
-                    app:srcCompat="@drawable/ic_telefono" />
-
-                <EditText
-                    android:id="@+id/txttelefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    app:binding="@{addUserModel.telefonoUI}"
-                    android:hint="@string/telefono"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageViewTipo"
+                    android:id="@+id/imageViewDivipola"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="15dp"
                     app:srcCompat="@drawable/ic_tipopersona" />
 
-                <EditText
-                    android:id="@+id/txttipopersona"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    app:binding="@{addUserModel.tiponitUI}"
-                    android:hint="@string/telefono"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageViewRegimen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="15dp"
-                    app:srcCompat="@drawable/ic_regimen" />
-
-                <EditText
-                    android:id="@+id/txtregimen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    app:binding="@{addUserModel.regimenUI}"
-                    android:hint="@string/regimen"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageViewGps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="15dp"
-                    app:srcCompat="@drawable/ic_gps" />
-
-                <EditText
-                    android:id="@+id/txtdireccion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    app:binding="@{addUserModel.direccionUI}"
-                    android:hint="@string/direccion"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageViewDivipola"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="15dp"
-                    app:srcCompat="@drawable/ic_gps" />
-
                 <Spinner
                     android:id="@+id/spndivipola"
                     android:layout_width="210dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:entries="@array/divipola"/>
+                    android:entries="@array/item_roles"
+                    android:selectedItemPosition="@={addUserModel.item.selectedItemPosition}"/>
 
             </LinearLayout>
 
@@ -270,7 +185,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:layout_gravity="center">
 
                 <Button
                     android:id="@+id/button"
@@ -278,7 +194,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="REGISTRAR"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:onClick="@{addUserModel::onClick}"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -3,6 +3,8 @@ package Models;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 import java.util.Objects;
 
 public class BindableString extends BaseObservable {

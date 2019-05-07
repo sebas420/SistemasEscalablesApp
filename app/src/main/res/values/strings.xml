@@ -13,9 +13,10 @@
     <string name="empresa">Sistemas Escalables</string>
     <string name="prompt_email">INGRESE EL CORREO</string>
     <string name="prompt_password">INGRESE LA CONTRASEÑA</string>
-    <string name="action_sign_in">Siguiente</string>
+    <string name="action_sign_in">Siguiente</string>|
     <string name="ingresar">INGRESAR</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">El Correo Ingresado Es Invalido</string>
+    <string name="cedula2">"Error!"</string>
     <string name="error_invalid_password">CONTRASEÑA DEMACIADO CORTA</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -39,4 +40,6 @@
     <string name="telefono">"Telefono"</string>
     <string name="tipopersonas">"Tipo Persona"</string>
     <string name="regimen">"Regimen Iva"</string>
+    <string name="cedula">"Cedula"</string>
+    <string name="fail_registrer">"Fallo al registrar usuario"</string>
 </resources>

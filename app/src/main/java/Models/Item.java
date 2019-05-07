@@ -3,6 +3,8 @@ package Models;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 
 public class Item extends BaseObservable {
     private int selectedItemPosition;
