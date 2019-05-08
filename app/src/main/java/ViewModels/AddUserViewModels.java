@@ -3,9 +3,11 @@ package ViewModels;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.apolo.sistemasescalablesapp.R;
 import com.example.apolo.sistemasescalablesapp.databinding.CrearUsuariosBinding;
@@ -15,13 +17,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Interface.IonClick;
 import Library.LPermissions;
+import Library.MemoryData;
 import Library.Networks;
 import Library.UploadImage;
 import Library.Validate;
@@ -29,15 +37,17 @@ import Models.Collections;
 import Models.UserModels;
 
 public class AddUserViewModels extends UserModels implements IonClick {
-    private Activity _activity;
-    private CrearUsuariosBinding _binding;
     private FirebaseAuth mAuth;
+    private Activity _activity;
+    private UploadImage _uploadImage;
     private FirebaseFirestore _db;
     private DocumentReference _documentRef;
-    private UploadImage _uploadImage;
+    private CrearUsuariosBinding _binding;
     private LPermissions _permissions;
     private FirebaseStorage _storage;
     private StorageReference _storageRef;
+    private Gson gson = new Gson();
+    private MemoryData _memoryData;
 
     public AddUserViewModels(Activity activity, CrearUsuariosBinding binding) {
         _activity = activity;
@@ -47,6 +57,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
         _permissions = new LPermissions(activity);
         _storage = FirebaseStorage.getInstance();
         _storageRef = _storage.getReference();
+        _memoryData = MemoryData.getInstance(activity);
     }
 
     public UploadImage get_uploadImage() {
@@ -165,5 +176,29 @@ public class AddUserViewModels extends UserModels implements IonClick {
     }
     private boolean isPasswordValid(String password){
         return password.length() >= 6;
+    }
+    public void onSaveInstance(Bundle saveInstanceState, Bitmap selectedImage){
+        saveInstanceState.putParcelable("image",selectedImage);
+        List<String> data = new ArrayList<>();
+        data.add(nombreUI.getValue());
+        data.add(apellidoUI.getValue());
+        data.add(emailUI.getValue());
+        data.add(cedulaUI.getValue());
+        _memoryData.saveData("DATA",gson.toJson(data));
+    }
+    public void onRestoreInstance(Bundle savedInstanceState){
+        Bitmap selectedImage = savedInstanceState.getParcelable("image");
+        if(selectedImage != null){
+            _binding.imageViewUser.setImageBitmap(selectedImage);
+            _binding.imageViewUser.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }else{
+            _binding.imageViewUser.setImageResource(R.drawable.ic_person_white);
+        }
+        Type typeItem = new TypeToken<List<String>>(){}.getType();
+        List<String> data = gson.fromJson(_memoryData.getData("DATA"),typeItem);
+        nombreUI.setValue(data.get(0));
+        apellidoUI.setValue(data.get(1));
+        emailUI.setValue(data.get(2));
+        cedulaUI.setValue(data.get(3));
     }
 }
