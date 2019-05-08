@@ -128,18 +128,21 @@ public class AddUserViewModels extends UserModels implements IonClick {
         }
     }
 
-    private void insertUser() {
-        mAuth.createUserWithEmailAndPassword(emailUI.getValue(), cedulaUI.getValue())
-                .addOnCompleteListener(_activity, (task) -> {
-                    if (task.isSuccessful()) {
-                        String role = _activity.getResources().getStringArray(R.array.item_roles)[item.getSelectedItemPosition()];
+    private void insertUser(){
+        mAuth.createUserWithEmailAndPassword(emailUI.getValue(),cedulaUI.getValue())
+                .addOnCompleteListener(_activity,(task)->{
+                    if (task.isSuccessful()){
+                        String role = _activity.getResources()
+                                .getStringArray(R.array.item_roles)[item
+                                .getSelectedItemPosition()];
                         _db = FirebaseFirestore.getInstance();
-                        _documentRef = _db.collection(Collections.Usuarios.USUARIOS).document(emailUI.getValue());
+                        _documentRef = _db.collection(Collections.Usuarios.USUARIOS)
+                                .document(emailUI.getValue());
                         Map<String, Object> user = new HashMap<>();
                         user.put(Collections.Usuarios.APELLIDO,apellidoUI.getValue());
                         user.put(Collections.Usuarios.EMAIL,emailUI.getValue());
                         user.put(Collections.Usuarios.NOMBRE,nombreUI.getValue());
-                        user.put(Collections.Usuarios.ROLE, role);
+                        user.put(Collections.Usuarios.ROLE,role);
                         _documentRef.set(user).addOnCompleteListener((task2)->{
                             if (task2.isSuccessful()){
                                 StorageReference imagesRef = _storageRef.
@@ -157,7 +160,8 @@ public class AddUserViewModels extends UserModels implements IonClick {
 
 
                                 }).addOnSuccessListener((taskSnapshot)-> {
-
+                                    _memoryData.saveData("DATA","");
+                                    _activity.finish();
                                 });
                             }
 
@@ -170,8 +174,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
                     }
                 });
     }
-
-    private boolean isEmailValid(String email) {
+    private boolean isEmailValid(String email){
         return Validate.isEmail(email);
     }
     private boolean isPasswordValid(String password){

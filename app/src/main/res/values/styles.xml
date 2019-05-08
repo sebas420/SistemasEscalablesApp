@@ -21,6 +21,17 @@
         <item name="colorAccent">@color/colorText</item>
     </style>
 
+    <style name="CardViewTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPaddingBottom">3dp</item>
+        <item name="contentPaddingTop">5dp</item>
+        <item name="contentPaddingLeft">16dp</item>
+        <item name="contentPaddingRight">16dp</item>
+        <item name="cardBackgroundColor">@color/colorText</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
