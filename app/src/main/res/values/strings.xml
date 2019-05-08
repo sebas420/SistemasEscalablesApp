@@ -42,4 +42,6 @@
     <string name="regimen">"Regimen Iva"</string>
     <string name="cedula">"Cedula"</string>
     <string name="fail_registrer">"Fallo al registrar usuario"</string>
+
+    <string name="permits">Es necesario conceder permiso</string>
 </resources>

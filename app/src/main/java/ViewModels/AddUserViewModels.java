@@ -1,6 +1,8 @@
 package ViewModels;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,12 +12,18 @@ import com.example.apolo.sistemasescalablesapp.databinding.CrearUsuariosBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import Interface.IonClick;
+import Library.LPermissions;
 import Library.Networks;
+import Library.UploadImage;
 import Library.Validate;
 import Models.Collections;
 import Models.UserModels;
@@ -26,16 +34,38 @@ public class AddUserViewModels extends UserModels implements IonClick {
     private FirebaseAuth mAuth;
     private FirebaseFirestore _db;
     private DocumentReference _documentRef;
+    private UploadImage _uploadImage;
+    private LPermissions _permissions;
+    private FirebaseStorage _storage;
+    private StorageReference _storageRef;
 
     public AddUserViewModels(Activity activity, CrearUsuariosBinding binding) {
         _activity = activity;
         _binding = binding;
         mAuth = FirebaseAuth.getInstance();
+        _uploadImage = new UploadImage(activity);
+        _permissions = new LPermissions(activity);
+        _storage = FirebaseStorage.getInstance();
+        _storageRef = _storage.getReference();
+    }
+
+    public UploadImage get_uploadImage() {
+        return _uploadImage;
     }
 
     @Override
     public void onClick(View view) {
-        registrarUsuarios();
+        switch (view.getId()){
+            case R.id.btnAddUser:
+                registrarUsuarios();
+                break;
+            case R.id.imageViewUser:
+                if (_permissions.STORAGE()) {
+                    _uploadImage.getImage();
+                }
+                break;
+        }
+
     }
 
     private void registrarUsuarios() {
@@ -100,10 +130,29 @@ public class AddUserViewModels extends UserModels implements IonClick {
                         user.put(Collections.Usuarios.NOMBRE,nombreUI.getValue());
                         user.put(Collections.Usuarios.ROLE, role);
                         _documentRef.set(user).addOnCompleteListener((task2)->{
+                            if (task2.isSuccessful()){
+                                StorageReference imagesRef = _storageRef.
+                                        child(Collections.Usuarios.USUARIOS+"/"
+                                                +emailUI.getValue()+".png");
+                                _binding.imageViewUser.setDrawingCacheEnabled(true);
+                                _binding.imageViewUser.buildDrawingCache();
+                                Bitmap bitmap = ((BitmapDrawable) _binding.imageViewUser
+                                        .getDrawable()).getBitmap();
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                byte[] data = baos.toByteArray();
+                                UploadTask uploadTask = imagesRef.putBytes(data);
+                                uploadTask.addOnFailureListener((exception)-> {
+
+
+                                }).addOnSuccessListener((taskSnapshot)-> {
+
+                                });
+                            }
 
                         });
-                        //Toast.makeText(_activity, data, Toast.LENGTH_SHORT).show();
-                    } else {
+
+                    }else{
                         View view = _binding.txtcedula;
                         Snackbar.make(view, R.string.fail_registrer, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
