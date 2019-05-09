@@ -44,4 +44,5 @@
     <string name="fail_registrer">"Fallo al registrar usuario"</string>
 
     <string name="permits">Es necesario conceder permiso</string>
+    <string name="action_search">Buscar</string>
 </resources>

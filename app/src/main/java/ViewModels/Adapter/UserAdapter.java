@@ -1,6 +1,8 @@
 package ViewModels.Adapter;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,6 +49,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder._binding.setUser(_userList.get(position));
+        byte[]bytes = _userList.get(position).getBytes();
+        Bitmap _selectedImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        holder._binding.thumbnail.setImageBitmap(_selectedImage);
         holder._binding.cardViewUser.setOnClickListener((v)-> {
 
             if (_listener != null) {

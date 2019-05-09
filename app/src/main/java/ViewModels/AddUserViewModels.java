@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.apolo.sistemasescalablesapp.R;
 import com.example.apolo.sistemasescalablesapp.databinding.CrearUsuariosBinding;
@@ -58,6 +59,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
         _storage = FirebaseStorage.getInstance();
         _storageRef = _storage.getReference();
         _memoryData = MemoryData.getInstance(activity);
+        _binding.progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public UploadImage get_uploadImage() {
@@ -67,56 +69,55 @@ public class AddUserViewModels extends UserModels implements IonClick {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btnAddUser:
+            case R.id.buttonAddUser:
                 registrarUsuarios();
                 break;
             case R.id.imageViewUser:
-                if (_permissions.STORAGE()) {
+                if (_permissions.STORAGE()){
                     _uploadImage.getImage();
                 }
                 break;
         }
 
     }
+    private void registrarUsuarios(){
 
-    private void registrarUsuarios() {
-
-        View focusView;
-        if (TextUtils.isEmpty(nombreUI.getValue())) {
-            _binding.txtnombre.setError(_activity.getString(R.string.error_field_required));
-            focusView = _binding.txtnombre;
+        View focusView ;
+        if (TextUtils.isEmpty(nombreUI.getValue())){
+            _binding.editTextNombre.setError(_activity.getString(R.string.error_field_required));
+            focusView = _binding.editTextNombre;
             focusView.requestFocus();
-        } else {
-            if (TextUtils.isEmpty(apellidoUI.getValue())) {
-                _binding.txtapellido.setError(_activity.getString(R.string.error_field_required));
-                focusView = _binding.txtapellido;
+        }else{
+            if (TextUtils.isEmpty(apellidoUI.getValue())){
+                _binding.editTextApellido.setError(_activity.getString(R.string.error_field_required));
+                focusView = _binding.editTextApellido;
                 focusView.requestFocus();
-            } else {
-                if (TextUtils.isEmpty(emailUI.getValue())) {
-                    _binding.txtemail.setError(_activity.getString(R.string.error_field_required));
-                    focusView = _binding.txtemail;
+            }else{
+                if (TextUtils.isEmpty(emailUI.getValue())){
+                    _binding.editTextEmail.setError(_activity.getString(R.string.error_field_required));
+                    focusView = _binding.editTextEmail;
                     focusView.requestFocus();
 
-                } else {
-                    if (!isEmailValid(emailUI.getValue())) {
-                        _binding.txtemail.setError(_activity.getString(R.string.error_invalid_email));
-                        focusView = _binding.txtemail;
+                }else{
+                    if (!isEmailValid(emailUI.getValue())){
+                        _binding.editTextEmail.setError(_activity.getString(R.string.error_invalid_email));
+                        focusView = _binding.editTextEmail;
                         focusView.requestFocus();
-                    } else {
-                        if (TextUtils.isEmpty(cedulaUI.getValue())) {
-                            _binding.txtcedula.setError(_activity.getString(R.string.error_field_required));
-                            focusView = _binding.txtcedula;
+                    } else{
+                        if (TextUtils.isEmpty(cedulaUI.getValue())){
+                            _binding.editTextPassword.setError(_activity.getString(R.string.error_field_required));
+                            focusView = _binding.editTextPassword;
                             focusView.requestFocus();
-                        } else {
-                            if (!isPasswordValid(cedulaUI.getValue())) {
-                                _binding.txtcedula.setError(_activity.getString(R.string.error_invalid_password));
-                                focusView = _binding.txtcedula;
+                        }else{
+                            if (!isPasswordValid(cedulaUI.getValue())){
+                                _binding.editTextPassword.setError(_activity.getString(R.string.error_invalid_password));
+                                focusView = _binding.editTextPassword;
                                 focusView.requestFocus();
-                            } else {
-                                if (new Networks(_activity).verificaConexion()) {
+                            }else{
+                                if (new Networks(_activity).verificaConexion()){
                                     insertUser();
-                                } else {
-                                    focusView = _binding.txtcedula;
+                                }else{
+                                    focusView = _binding.editTextPassword;
                                     Snackbar.make(focusView, R.string.networks, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
@@ -127,8 +128,8 @@ public class AddUserViewModels extends UserModels implements IonClick {
             }
         }
     }
-
     private void insertUser(){
+        _binding.progressBar.setVisibility(ProgressBar.VISIBLE);
         mAuth.createUserWithEmailAndPassword(emailUI.getValue(),cedulaUI.getValue())
                 .addOnCompleteListener(_activity,(task)->{
                     if (task.isSuccessful()){
@@ -147,7 +148,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
                             if (task2.isSuccessful()){
                                 StorageReference imagesRef = _storageRef.
                                         child(Collections.Usuarios.USUARIOS+"/"
-                                                +emailUI.getValue()+".png");
+                                                +emailUI.getValue());
                                 _binding.imageViewUser.setDrawingCacheEnabled(true);
                                 _binding.imageViewUser.buildDrawingCache();
                                 Bitmap bitmap = ((BitmapDrawable) _binding.imageViewUser
@@ -168,7 +169,8 @@ public class AddUserViewModels extends UserModels implements IonClick {
                         });
 
                     }else{
-                        View view = _binding.txtcedula;
+                        _binding.progressBar.setVisibility(ProgressBar.INVISIBLE);
+                        View view = _binding.editTextPassword;
                         Snackbar.make(view, R.string.fail_registrer, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }

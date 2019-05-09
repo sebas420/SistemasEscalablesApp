@@ -5,12 +5,14 @@ public class User {
     private String Nombre;
     private String Email;
     private String Role;
+    private byte[]Bytes;
 
-    public User(String apellido, String nombre, String email, String role) {
+    public User(String apellido, String nombre, String email, String role,byte[]bytes) {
         Apellido = apellido;
         Nombre = nombre;
         Email = email;
         Role = role;
+        Bytes = bytes;
     }
 
     public String getApellido() {
@@ -27,5 +29,9 @@ public class User {
 
     public String getRole() {
         return Role;
+    }
+
+    public byte[] getBytes() {
+        return Bytes;
     }
 }
