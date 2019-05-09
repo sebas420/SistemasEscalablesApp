@@ -2,6 +2,7 @@ package ViewModels;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.apolo.sistemasescalablesapp.CrearUsuarios;
 import com.example.apolo.sistemasescalablesapp.R;
@@ -19,12 +19,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import Interface.IonClick;
+import Library.MemoryData;
+import Library.Networks;
 import Models.Collections;
 import Models.Pojo.User;
 import ViewModels.Adapter.UserAdapter;
@@ -37,6 +40,8 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
     private UserAdapter _userAdapter;
     private FirebaseFirestore _db;
     private FirebaseStorage _storage;
+    private Gson gson = new Gson();
+    private MemoryData _memoryData;
     private StorageReference _storageRef;
     private  List<User> userList =  new ArrayList<>();
 
@@ -54,6 +59,7 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
         _binding.swipeRefresh.setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         _binding.swipeRefresh.setOnRefreshListener(this);
+        _memoryData = MemoryData.getInstance(activity);
         CloudFirestore();
     }
 
@@ -90,8 +96,20 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
         _binding.swipeRefresh.setRefreshing(false);
     }
     @Override
-    public void onUserClicked(User user){
-        Toast.makeText(_activity, "User clicked! " + user.getNombre(), Toast.LENGTH_SHORT).show();
+    public void onUserClicked(User user) {
+        if (new Networks(_activity).verificaConexion()) {
+            _memoryData.saveData("User", gson.toJson(new User(
+                    user.getApellido(),
+                    user.getNombre(),
+                    user.getEmail(),
+                    user.getRole(),
+                    null
+            )));
+            _activity.startActivity(new Intent(_activity, CrearUsuarios.class));
+        } else {
+            Snackbar.make(_binding.progressBar, R.string.networks, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     @Override
@@ -120,4 +138,5 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
         return false;
     }
 }
+
 

@@ -2,6 +2,7 @@ package ViewModels;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -35,6 +36,7 @@ import Library.Networks;
 import Library.UploadImage;
 import Library.Validate;
 import Models.Collections;
+import Models.Pojo.User;
 import Models.UserModels;
 
 public class AddUserViewModels extends UserModels implements IonClick {
@@ -60,6 +62,9 @@ public class AddUserViewModels extends UserModels implements IonClick {
         _storageRef = _storage.getReference();
         _memoryData = MemoryData.getInstance(activity);
         _binding.progressBar.setVisibility(ProgressBar.INVISIBLE);
+        if(!_memoryData.getData("User").equals("") ){
+            getUser();
+        }
     }
 
     public UploadImage get_uploadImage() {
@@ -115,7 +120,11 @@ public class AddUserViewModels extends UserModels implements IonClick {
                                 focusView.requestFocus();
                             }else{
                                 if (new Networks(_activity).verificaConexion()){
-                                    insertUser();
+                                    if(_memoryData.getData("User").equals("") ){
+                                        insertUser();
+                                    }else{
+                                        editUser();
+                                    }
                                 }else{
                                     focusView = _binding.editTextPassword;
                                     Snackbar.make(focusView, R.string.networks, Snackbar.LENGTH_LONG)
@@ -161,7 +170,8 @@ public class AddUserViewModels extends UserModels implements IonClick {
 
 
                                 }).addOnSuccessListener((taskSnapshot)-> {
-                                    _memoryData.saveData("DATA","");
+                                    _memoryData.saveData("User","");
+                                    _memoryData.saveData("Data","");
                                     _activity.finish();
                                 });
                             }
@@ -205,5 +215,71 @@ public class AddUserViewModels extends UserModels implements IonClick {
         apellidoUI.setValue(data.get(1));
         emailUI.setValue(data.get(2));
         cedulaUI.setValue(data.get(3));
+    }
+    private static User data;
+    private void getUser(){
+        final long ONE_MEGABYTE = 1024 * 1024;
+        Type typeItem = new TypeToken<User>(){}.getType();
+        data = gson.fromJson(_memoryData.getData("User"),typeItem);
+        nombreUI.setValue(data.getNombre());
+        apellidoUI.setValue(data.getApellido());
+        emailUI.setValue(data.getEmail());
+        cedulaUI.setValue("********");
+        if (data.getRole().equals("Admin")){
+            item.setSelectedItemPosition(1);
+        }else{
+            item.setSelectedItemPosition(0);
+        }
+        if (new Networks(_activity).verificaConexion()){
+            _storageRef.child(Collections.Usuarios.USUARIOS+"/"+data.getEmail())
+                    .getBytes(ONE_MEGABYTE).addOnSuccessListener((bytes)->{
+                Bitmap _selectedImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                _binding.imageViewUser.setImageBitmap(_selectedImage);
+                _binding.imageViewUser.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            });
+        }else{
+            Snackbar.make(_binding.editTextPassword, R.string.networks, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+        _binding.emailLayout.setVisibility(View.GONE);
+        _binding.cedulaLayout.setVisibility(View.GONE);
+    }
+    private void editUser(){
+        _binding.progressBar.setVisibility(ProgressBar.VISIBLE);
+        String role = _activity.getResources()
+                .getStringArray(R.array.item_roles)[item
+                .getSelectedItemPosition()];
+        _db = FirebaseFirestore.getInstance();
+        _documentRef = _db.collection(Collections.Usuarios.USUARIOS)
+                .document(data.getEmail());
+        Map<String, Object> user = new HashMap<>();
+        user.put(Collections.Usuarios.APELLIDO,apellidoUI.getValue());
+        user.put(Collections.Usuarios.EMAIL,data.getEmail());
+        user.put(Collections.Usuarios.NOMBRE,nombreUI.getValue());
+        user.put(Collections.Usuarios.ROLE,role);
+        _documentRef.set(user).addOnCompleteListener((task2)-> {
+            if (task2.isSuccessful()){
+                StorageReference imagesRef = _storageRef.
+                        child(Collections.Usuarios.USUARIOS+"/"
+                                +data.getEmail());
+                _binding.imageViewUser.setDrawingCacheEnabled(true);
+                _binding.imageViewUser.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) _binding.imageViewUser
+                        .getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
+                UploadTask uploadTask = imagesRef.putBytes(data);
+                uploadTask.addOnFailureListener((exception)-> {
+
+
+                }).addOnSuccessListener((taskSnapshot)-> {
+                    _memoryData.saveData("DATA","");
+                    _memoryData.saveData("User","");
+                    _activity.finish();
+                });
+            }
+        });
+
     }
 }

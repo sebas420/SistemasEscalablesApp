@@ -93,6 +93,7 @@
                             android:inputType="textPersonName"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/emailLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -119,6 +120,7 @@
                             android:inputType="textEmailAddress"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/cedulaLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
