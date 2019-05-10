@@ -30,18 +30,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints"
-                android:id="@+id/swipe_refresh">
+                tools:ignore="MissingConstraints">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewUser"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </android.support.v4.widget.SwipeRefreshLayout>
-
-
         </android.support.constraint.ConstraintLayout>
 
         <android.support.design.widget.FloatingActionButton

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import Animation.FloatingAction;
+import Animation.RecyclerViewScroll;
 import Interface.IonClick;
 import Library.MemoryData;
 import Library.Networks;
@@ -32,7 +34,7 @@ import Models.Collections;
 import Models.Pojo.User;
 import ViewModels.Adapter.UserAdapter;
 
-public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener {
+public class UserViewModels extends RecyclerViewScroll implements IonClick ,UserAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener {
     private Activity _activity;
     private UsuariosBinding _binding;
     private RecyclerView _recycler;
@@ -44,6 +46,7 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
     private MemoryData _memoryData;
     private StorageReference _storageRef;
     private  List<User> userList =  new ArrayList<>();
+    private FloatingAction _floatingAction;
 
     public UserViewModels(Activity activity, UsuariosBinding binding) {
         _activity = activity;
@@ -53,6 +56,7 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
         _recycler.setHasFixedSize(true);
         _lManager = new LinearLayoutManager(activity);
         _recycler.setLayoutManager(_lManager);
+        _recycler.addOnScrollListener(this);
         _db = FirebaseFirestore.getInstance();
         _storage = FirebaseStorage.getInstance();
         _storageRef = _storage.getReference();
@@ -60,6 +64,9 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
                 R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         _binding.swipeRefresh.setOnRefreshListener(this);
         _memoryData = MemoryData.getInstance(activity);
+        binding.fabAddUser.setScaleX(0);
+        binding.fabAddUser.setScaleY(0);
+        _floatingAction = new FloatingAction(activity,_binding.fabAddUser);
         CloudFirestore();
     }
 
@@ -67,6 +74,7 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_addUser:
+                _memoryData.saveData("User","");
                 _activity.startActivity(new Intent(_activity, CrearUsuarios.class));
                 break;
         }
@@ -136,6 +144,16 @@ public class UserViewModels implements IonClick ,UserAdapter.AdapterListener, Sw
             initRecyclerView(list);
         }
         return false;
+    }
+
+    @Override
+    public void show() {
+        _floatingAction.show();
+    }
+
+    @Override
+    public void hide() {
+        _floatingAction.hide();
     }
 }
 
