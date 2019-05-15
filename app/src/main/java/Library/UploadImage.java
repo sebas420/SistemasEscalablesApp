@@ -23,7 +23,7 @@ public class UploadImage {
         photoPickerIntent.setType("image/*");
         photoPickerIntent.putExtra("crop","true");
         photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT,getTempoUri());
-        photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.PNG);
+        photoPickerIntent.putExtra("outputFormat",Bitmap.CompressFormat.PNG);
         _activity.startActivityForResult(photoPickerIntent,RESQUEST_CODE_CROP_IMAGE);
     }
     private Uri getTempoUri(){

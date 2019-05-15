@@ -5,7 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorButton">#0075ab</color>
     <color name="darker_gray">#e7e7e7</color>
-
+    <color name="darker_orange">#ffae00</color>
+    <color name="colorAzul">#1B3147</color>
     <!--LOGIN-->
-    <color name="colorText">#ffffff</color>
+    <color name="colorText">#ffffff</color>>
 </resources>

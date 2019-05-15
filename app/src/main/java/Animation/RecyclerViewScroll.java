@@ -3,8 +3,8 @@ package Animation;
 import android.support.v7.widget.RecyclerView;
 
 public abstract class RecyclerViewScroll extends RecyclerView.OnScrollListener{
-    private static final float HIDE_THRESHOLD = 100;
-    private static final float SHOW_THRESHOLD = 50;
+    private static final float HIDE_THRESHOLD = 20;
+    private static final float SHOW_THRESHOLD = 10;
     private int scrollDist = 0;
     private boolean isVisible = true;
 

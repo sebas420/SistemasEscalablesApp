@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 
 import com.android.databinding.library.baseAdapters.BR;
 
-
 public class Item extends BaseObservable {
     private int selectedItemPosition;
     /*La anotación enlazable debe aplicarse a cualquier método de acceso getter de una Observableclase. Bindable generará un campo en la clase BR para identificar el campo que ha cambiado.*/

@@ -16,10 +16,11 @@ public class BindableString extends BaseObservable {
     }
 
     public void setValue(String value) {
-        if (!Objects.equals(this.value,value)) {
+        if(!Objects.equals(this.value,value)){
             this.value = value;
             notifyPropertyChanged(BR.value);
         }
 
     }
 }
+

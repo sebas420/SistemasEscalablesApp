@@ -45,4 +45,20 @@
 
     <string name="permits">Es necesario conceder permiso</string>
     <string name="action_search">Buscar</string>
+
+    <!-- Datos -->
+
+    <string name="password">Contraseña</string>
+    <string name="button_register">Registrar</string>
+    <string name="fail_register">Fallo al registrar usuarios</string>
+
+
+    <!-- CLIENTES -->
+    <string name="clientes">Clientes</string>
+    <string name="crearCliente">Registrar cliente</string>
+    <string name="nid">NID</string>
+    <string name="invalid_nid">El nid ya esta registrado</string>
+
+    <!-- PROVEEDORES -->
+    <string name="proveedores">Proveedores</string>
 </resources>

@@ -69,3 +69,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         void onUserClicked(User user);
     }
 }
+
