@@ -59,6 +59,15 @@
     <string name="nid">NID</string>
     <string name="invalid_nid">El nid ya esta registrado</string>
 
+    <!-- DETALLES CLIENTES -->
+    <string name="details_cliente">Detalles del clientes</string>
+    <string name="report_cliente">Informe del cliente</string>
+    <string name="debt_cliente">Informe de la deuda</string>
+    <string name="number_ticket">Ticket:</string>
+    <string name="debt">Deuda</string>
+    <string name="date">Fecha</string>
+    <string name="payment">Pago</string>
+    <string name="edit">Actualizar</string>
     <!-- PROVEEDORES -->
     <string name="proveedores">Proveedores</string>
 </resources>

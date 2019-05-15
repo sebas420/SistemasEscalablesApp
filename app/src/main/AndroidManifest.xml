@@ -52,6 +52,12 @@
             android:name=".CrearCliente"
             android:label="@string/crearCliente"
             android:parentActivityName=".Clientes"></activity>
+
+        <activity
+            android:name=".DetailsCliente"
+            android:label="@string/details_cliente"
+            android:parentActivityName=".Clientes"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

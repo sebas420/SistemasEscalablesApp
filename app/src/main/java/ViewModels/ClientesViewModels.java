@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.apolo.sistemasescalablesapp.CrearCliente;
+import com.example.apolo.sistemasescalablesapp.DetailsCliente;
 import com.example.apolo.sistemasescalablesapp.R;
 import com.example.apolo.sistemasescalablesapp.databinding.ClientesBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,7 +34,7 @@ import Models.Collections;
 import Models.Pojo.Cliente;
 import ViewModels.Adapter.ClienteAdapter;
 
-public class ClientesViewModels extends RecyclerViewScroll implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener , ClienteAdapter.AdapterListener, SearchView.OnQueryTextListener {
+public class ClientesViewModels extends RecyclerViewScroll implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener ,ClienteAdapter.AdapterListener, SearchView.OnQueryTextListener {
     private Activity _activity;
     private ClientesBinding _binding;
     private RecyclerView _recycler;
@@ -130,7 +131,20 @@ public class ClientesViewModels extends RecyclerViewScroll implements View.OnCli
 
     @Override
     public void onClienteClicked(Cliente cliente) {
-
+        if (new Networks(_activity).verificaConexion()){
+            _memoryData.saveData("Cliente",gson.toJson(new Cliente(
+                    cliente.getApellido(),
+                    cliente.getNombre(),
+                    cliente.getEmail(),
+                    cliente.getNid(),
+                    cliente.getTelefono(),
+                    cliente.getDireccion(),
+                    null
+            )));
+            _activity.startActivity(new Intent(_activity, DetailsCliente.class));
+        }else{
+            Snackbar.make(_binding.progressBar, R.string.networks, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -181,7 +181,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
                     }else{
                         _binding.progressBar.setVisibility(ProgressBar.INVISIBLE);
                         View view = _binding.editTextPassword;
-                        Snackbar.make(view, R.string.fail_registrer, Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.fail_register, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 });
