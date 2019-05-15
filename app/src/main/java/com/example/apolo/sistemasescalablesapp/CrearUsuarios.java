@@ -37,7 +37,7 @@ public class CrearUsuarios extends AppCompatActivity {
                 _binding.imageViewUser.setImageBitmap(_selectedImage);
                 _binding.imageViewUser.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }else{
-                _binding.imageViewUser.setImageResource(R.mipmap.ic_persona);
+                _binding.imageViewUser.setImageResource(R.mipmap.person_black);
             }
         }
         _memoryData = MemoryData.getInstance(this);

@@ -207,7 +207,7 @@ public class AddUserViewModels extends UserModels implements IonClick {
             _binding.imageViewUser.setImageBitmap(selectedImage);
             _binding.imageViewUser.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }else{
-            _binding.imageViewUser.setImageResource(R.drawable.ic_person_white);
+            _binding.imageViewUser.setImageResource(R.mipmap.person_black);
         }
         Type typeItem = new TypeToken<List<String>>(){}.getType();
         List<String> data = gson.fromJson(_memoryData.getData("DATA"),typeItem);

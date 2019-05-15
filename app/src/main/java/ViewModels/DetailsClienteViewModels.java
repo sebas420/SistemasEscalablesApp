@@ -1,11 +1,14 @@
 package ViewModels;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
+import com.example.apolo.sistemasescalablesapp.CrearCliente;
 import com.example.apolo.sistemasescalablesapp.R;
 import com.example.apolo.sistemasescalablesapp.databinding.DetailsClienteBinding;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,12 +21,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import Interface.IonClick;
 import Library.MemoryData;
 import Library.Networks;
 import Models.Collections;
 import Models.Pojo.Cliente;
 
-public class DetailsClienteViewModels implements SwipeRefreshLayout.OnRefreshListener {
+public class DetailsClienteViewModels implements SwipeRefreshLayout.OnRefreshListener, IonClick {
     private Activity _activity;
     private MemoryData _memoryData;
     private FirebaseFirestore _db;
@@ -93,30 +97,30 @@ public class DetailsClienteViewModels implements SwipeRefreshLayout.OnRefreshLis
                 Bitmap _selectedImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 _binding.imageParalax.setImageBitmap(_selectedImage);
                 _binding.swipeRefresh.setRefreshing(false);
-                valor =  false;
+                valor =  true;
             });
-            _db.collection(Collections.Report_clientes.ReportClientes)
-                    .document(data.getNid()).get().addOnCompleteListener((task)->{
-                        if(task.isSuccessful()){
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()){
-                                String ticket = document.getData()
-                                        .get(Collections.Report_clientes.TICKET).toString();
-                                _binding.textTicket.setText(ticket);
-                                String deuda = document.getData()
-                                        .get(Collections.Report_clientes.DEUDA).toString();
-                                _binding.textDebt.setText(deuda);
-                                String fecha1 = document.getData()
-                                        .get(Collections.Report_clientes.FECHADEUDA).toString();
-                                _binding.textDate1.setText(fecha1);
-                                String pago = document.getData()
-                                        .get(Collections.Report_clientes.PAGO).toString();
-                                _binding.textPayment.setText(pago);
-                                String fecha2 = document.getData()
-                                        .get(Collections.Report_clientes.FECHAPAGO).toString();
-                                _binding.textDate2.setText(fecha2);
-                            }
-                        }
+            docRef = _db.collection(Collections.Report_clientes.ReportClientes)
+                    .document(data.getNid());
+            docRef.addSnapshotListener((snapshot,e)->{
+                if(snapshot.exists()){
+
+                    ticket = snapshot.getData()
+                            .get(Collections.Report_clientes.TICKET).toString();
+                    _binding.textTicket.setText(ticket);
+                    deuda = snapshot.getData()
+                            .get(Collections.Report_clientes.DEUDA).toString();
+                    _binding.textDebt.setText(deuda);
+                    String fecha1 = snapshot.getData()
+                            .get(Collections.Report_clientes.FECHADEUDA).toString();
+                    _binding.textDate1.setText(fecha1);
+                    String pago = snapshot.getData()
+                            .get(Collections.Report_clientes.PAGO).toString();
+                    _binding.textPayment.setText(pago);
+                    String fecha2 = snapshot.getData()
+                            .get(Collections.Report_clientes.FECHAPAGO).toString();
+                    _binding.textDate2.setText(fecha2);
+
+                }
             });
         }else{
             Snackbar.make(_binding.toolbar, R.string.networks, Snackbar.LENGTH_LONG).show();
@@ -125,6 +129,21 @@ public class DetailsClienteViewModels implements SwipeRefreshLayout.OnRefreshLis
 
     @Override
     public void onRefresh() {
+        if (new Networks(_activity).verificaConexion()){
+            CloudFirestore();
+        }else{
+            Snackbar.make(_binding.toolbar, R.string.networks, Snackbar.LENGTH_LONG).show();
+        }
+    }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fab_Edit:
+                if (valor) {
+                    _activity.startActivity(new Intent(_activity, CrearCliente.class));
+                }
+                break;
+        }
     }
 }

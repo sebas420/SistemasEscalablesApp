@@ -50,12 +50,13 @@
                                 android:orientation="vertical"
                                 android:padding="15dp">
                                 <android.support.design.widget.FloatingActionButton
-                                    android:id="@+id/floatingActionButton"
+                                    android:id="@+id/fab_Edit"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:clickable="true"
                                     app:backgroundTint="@color/darker_gray"
-                                    app:srcCompat="@mipmap/person_black" />
+                                    app:srcCompat="@mipmap/ic_persona"
+                                    android:onClick="@{details::onClick}"/>
 
                                 <TextView
                                     android:id="@+id/textView28"

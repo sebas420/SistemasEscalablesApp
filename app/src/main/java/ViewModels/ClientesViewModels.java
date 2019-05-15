@@ -77,6 +77,7 @@ public class ClientesViewModels extends RecyclerViewScroll implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab_addCliente:
+                _memoryData.saveData("Cliente","");
                 _activity.startActivity(new Intent(_activity, CrearCliente.class));
                 break;
         }
