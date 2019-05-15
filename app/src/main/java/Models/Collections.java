@@ -38,4 +38,11 @@ public class Collections {
             return report;
         }
     }
+    public static class Ticket_clientes{
+        public static String TICKET = "Ticket";
+        public static String DEUDA = "Deuda";
+        public static String PAGO = "Pago";
+        public static String FECHA = "Fecha";
+        public static String TicketClientes = "Ticket_clientes";
+    }
 }

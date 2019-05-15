@@ -47,11 +47,11 @@
     <string name="action_search">Buscar</string>
 
     <!-- Datos -->
-
     <string name="password">Contraseña</string>
     <string name="button_register">Registrar</string>
     <string name="fail_register">Fallo al registrar usuarios</string>
-
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 
     <!-- CLIENTES -->
     <string name="clientes">Clientes</string>
@@ -68,6 +68,9 @@
     <string name="date">Fecha</string>
     <string name="payment">Pago</string>
     <string name="edit">Actualizar</string>
+    <string name="debts">No tiene deuda</string>
+    <string name="payments">Realizar pagos</string>
+    <string name="message_payments">Pago incorrecto</string>
     <!-- PROVEEDORES -->
     <string name="proveedores">Proveedores</string>
 </resources>
